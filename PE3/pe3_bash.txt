@@ -1,0 +1,82 @@
+Answer the following questions in a new file titled pe3_bash.txt. Before you start, you may want to see what shell you are using with the command `echo $SHELL`. 
+bash and zsh will be fine for answering these questions. If you have questions about a different shell, please post these on piazza!
+
+What is the bash command to show your terminal's working directory (current location)?
+
+pwd
+
+How would you create an empty file called empty.txt from the command line?
+
+touch empty.txt
+
+Using the ls command, how would you list all files beginning with empty in your current directory?
+
+ls | grep "empty"
+
+Using the ls command, the wc command, and the |, how would you count the number of files ending in .txt in your current directory?
+
+ls | grep ".*.txt" | wc -w
+
+Using the echo command and > or >>, what is the command to write your name to empty.txt?
+
+echo "wayne" >> empty.txt
+
+What is the bash command to rename that file to notempty.txt?
+
+mv empty.txt notempty.txt
+
+What is the bash command to create a directory named pe3_bash?
+
+mkdir pe3_bash
+
+What is the command to move your terminal's working directory to pe3_bash?
+
+cd pe3_bash
+
+From the pe3_bash directory, how would you create a new directory, pe3_bash_number2 that has the same parent directory as pe3_bash?
+
+mkdir ../pe3_bash_number2
+
+What is the command to move from pe3_bash to pe3_bash_number2 (use only one command)?
+
+cd ../pe3_bash_number2
+
+What does pressing the up arrow key do?
+
+navigates to the previous bash command that was ran.
+
+What does pressing the down arrow key do?
+
+navigates to the next used bash command that was ran or back to the empty line.
+
+What does pressing ctrl+r do?
+
+does a reverse search for commands used.
+
+What are two different command-line based text editors (text editors that run from the command line and do not open a separate application)? 
+(Answer the following questions for each editor that you have chosen.)
+
+sublime, emacs, vim, and... vscode!
+
+What command do you use to open a file with this editor?
+
+vim filename.ext
+
+What command do you use to save a file while using this editor?
+
+press 'esc' and type command, :w
+
+What command do you use to exit this editor?
+
+press 'esc' and type command, :q
+
+to concatenate both save/quit commands, press 'esc' and type command, :wq
+
+What are two reasons you might want to use the text editors listed above?
+
+Text editors are very lightweight so they are quick to get up and running.
+
+They are also very simple, so it is not overcrowded with tools to learn and allow
+you to learn the barebones commands that can allow control of text and code.
+
+Also, vim is very prevalent on linux/unix and is very stable.
