@@ -7,8 +7,16 @@
 #include <time.h>
 
 int main() {
+    // seed random
     srand (time(NULL));
-    Maze m;
+
+    // create maze, character, enemy count, and init a new game
+    Player p("hooman", true);
+    int enemy_count = (rand() % 3) + 2; // 2-4 enemies
+    Maze m(&p, enemy_count);
+    m.NewGame();
+
+    // print out report of game, delim: '$'
     char * report = &(m.GenerateReport()[0]);
     char * rep_tok = strtok(report, "$");
 

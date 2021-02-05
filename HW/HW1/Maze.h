@@ -51,12 +51,13 @@ private:
 
 class Maze {
 public:
-	Maze();
-	~Maze();
+	Maze() {}
+	Maze(Player *p, const int enemy_count);
+	~Maze(); // del board
 
 	// initialize a new game, given one human player and 
 	// a number of enemies to generate
-	void NewGame(Player *human, const int enemies);
+	void NewGame();
 
 	// have the given Player take their turn
 	void TakeTurn(Player *p);

@@ -132,23 +132,18 @@ std::ostream& operator<<(std::ostream& os, const Board &b) {
     return os;
 }
 
-Maze::Maze() {
-    Player p("hooman", true);
-    int enemy_count = (rand() % 3) + 2; // 2-4 enemies
-    NewGame(&p, enemy_count);
-}
-
-// initialize a new game, given one human player and 
-// a number of enemies to generate
-void Maze::NewGame(Player *human, const int enemies) {
+Maze::Maze(Player *human, const int enemies) {
     human->SetPosition(Position{0,0});
-
     this->board_ = new Board(enemies, 4, 4);
     std::vector<Player *> enemies_v = this->board_->get_enemies();
 
     this->players_.push_back(human);
     this->players_.insert(this->players_.end(), enemies_v.begin(), enemies_v.end());
+}
 
+// initialize a new game, given one human player and 
+// a number of enemies to generate
+void Maze::NewGame() {
     std::cout << *this->board_ << std::endl;
     while(!IsGameOver()) {
         for (Player *p : this->players_) {
