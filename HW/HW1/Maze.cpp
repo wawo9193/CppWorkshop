@@ -7,8 +7,15 @@
 
 std::string SquareTypeStringify(SquareType sq) {
     // { Wall=0, Exit, Empty, Human, Enemy, Treasure };
-    std::string arr[6] = {"🟫 ", "🚪", " ", "🦹‍", "👾", "💎"};
-	return arr[sq];
+    std::unordered_map<SquareType, std::string> emo_map = {
+        { SquareType::Wall, "🟫 " },
+        { SquareType::Exit, "🚪" },
+        { SquareType::Empty, " " },
+        { SquareType::Human, "🦹‍" },
+        { SquareType::Enemy, "👾" },
+        { SquareType::Treasure, "💎" }
+    };
+	return emo_map[sq];
 }
 
 Board::Board(int enemy_count, const int m, const int n): 

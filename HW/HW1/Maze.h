@@ -7,7 +7,7 @@
 #include <unordered_map>
 
 // types of square values that populate the board
-enum SquareType { Wall=0, Exit, Empty, Human, Enemy, Treasure };
+enum class SquareType { Wall=0, Exit, Empty, Human, Enemy, Treasure };
 
 // returns an emoji representing the square type
 std::string SquareTypeStringify(SquareType sq);
@@ -52,7 +52,7 @@ private:
 class Maze {
 public:
 	Maze() {}
-	Maze(Player *p, const int enemy_count);
+	Maze(Player *human, const int enemy_count);
 	~Maze(); // del board
 
 	// initialize a new game, given one human player and 
