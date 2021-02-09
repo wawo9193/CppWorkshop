@@ -18,6 +18,7 @@ public:
 	Board(int enemy_count, const int m, const int n);
 	~Board() = default;
 
+	// getters, setters
 	int get_rows() const {return rows_; }
 	int get_cols() const {return cols_; }
 	void set_rows(const int r) { this->rows_=r; }
@@ -34,10 +35,17 @@ public:
 
 	// checkout 
 	std::string ToRelativePosition(Position pos);
+
+	// retrieve valid moves from stated position
 	std::unordered_map<std::string, Position> GetMoves(Position pos);
+
+	// move player to next position if valid
 	bool MovePlayer(Player *p, std::unordered_map<std::string, Position> pos_map, std::string next_pos);
+
+	// retrieve squaretype of exit
 	SquareType GetExitOccupant();
 
+	// overload stream operator to print board
 	friend std::ostream& operator<<(std::ostream& os, const Board &b);
 
 private:
@@ -55,8 +63,7 @@ public:
 	Maze(Player *human);
 	~Maze(); // del board
 
-	// initialize a new game, given one human player and 
-	// a number of enemies to generate
+	// initialize a new game
 	void NewGame();
 
 	// return if current board is valid or not
@@ -69,7 +76,7 @@ public:
 	Player * GetNextPlayer();
 
 	// return true if the human made it to the exit 
-	// or the enemies ate all the humans
+	// or the enemies ate human
 	bool IsGameOver();
 
 	// string info about the game's conditions after it is over

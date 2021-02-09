@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+// position of player
 struct Position {
 	int row;
 	int col;
@@ -16,13 +17,13 @@ struct Position {
 
 class Player {
 public:
-	Player(const std::string name, const bool is_human);  // constructor
+	Player(const std::string name, const bool is_human);
 	
-	// These are already implemented for you
-	std::string get_name() const {return name_; }  // inline member function
-	int get_points() const {return points_; }  // inline member function
-	Position get_position() const {return pos_; }  // inline member function
-	bool is_human() const {return is_human_; }  // inline member function
+	// getters, setters
+	std::string get_name() const {return name_; }
+	int get_points() const {return points_; }
+	Position get_position() const {return pos_; }
+	bool is_human() const {return is_human_; }
 
 	void ChangePoints(const int x);  
 
