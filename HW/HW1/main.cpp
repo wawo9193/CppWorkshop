@@ -2,8 +2,8 @@
 #include "Player.h"
 
 #include <iostream>
-#include <string>
 #include <random>
+#include <string.h>
 #include <time.h>
 
 int main() {

@@ -1,9 +1,9 @@
 #include "Maze.h"
 
 #include <iostream>
-#include <vector>
-#include <string>
 #include <random>
+#include <string>
+#include <vector>
 
 std::string SquareTypeStringify(SquareType sq) {
     /*
@@ -92,7 +92,7 @@ std::unordered_map<std::string, Position> Board::GetMoves(Position pos) {
     *   to the passed in position. If there is a Wall (either wall or out of bounds),
     *   or an enemy then erase that possiblity from map of moves.
     */
-   
+
     std::unordered_map<std::string, Position> moves;
 
     int i = pos.row, j = pos.col;
@@ -255,7 +255,6 @@ void Maze::TakeTurn(Player *p) {
 
     std::unordered_map<std::string, Position> moves = this->board_->GetMoves(p->get_position());
     std::string input;
-    bool has_moved = false;
 
     std::cout << p->get_name() << " can go: ";
     for (auto it : moves) {
@@ -266,7 +265,7 @@ void Maze::TakeTurn(Player *p) {
     for (char c : input) c = tolower(c);
 
     if (moves.find(input)!=moves.end()) {
-        has_moved = this->board_->MovePlayer(p, moves, input);
+        this->board_->MovePlayer(p, moves, input);
     } else {
         std::cout << "Player stayed" << std::endl;
     }

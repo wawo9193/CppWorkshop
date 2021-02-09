@@ -1,8 +1,8 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 // position of player
 struct Position {

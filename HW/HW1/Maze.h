@@ -2,9 +2,10 @@
 #define MAZE_H
 
 #include "Player.h"
-#include <vector>
+
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 
 // types of square values that populate the board
 enum class SquareType { Wall=0, Exit, Empty, Human, Enemy, Treasure };
