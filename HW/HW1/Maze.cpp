@@ -75,10 +75,9 @@ std::vector<Player *> Board::get_enemies() const {
     return this->enemies_v_;
 }
 
-std::unordered_map<std::string, Position> Board::GetMoves(Player *p) {
+std::unordered_map<std::string, Position> Board::GetMoves(Position pos) {
     std::unordered_map<std::string, Position> output_map;
     std::vector<Position> output;
-    Position pos = p->get_position();
 
     int i = pos.row, j = pos.col;
     output_map["up"]    = Position{i-1, j};
@@ -139,9 +138,11 @@ std::ostream& operator<<(std::ostream& os, const Board &b) {
     return os;
 }
 
-Maze::Maze(Player *human, const int enemies) {
+Maze::Maze(Player *human) {
     human->SetPosition(Position{0,0});
-    this->board_ = new Board(enemies, 4, 4);
+
+    while (!ValidBoard()) {}
+
     std::vector<Player *> enemies_v = this->board_->get_enemies();
 
     this->players_.push_back(human);
@@ -162,9 +163,37 @@ void Maze::NewGame() {
     GenerateReport();
 }
 
+bool IsValid(Board *b, std::vector<std::vector<bool> > v, Position p) {
+    // get all possible moves
+    std::unordered_map<std::string, Position> moves = b->GetMoves(p);
+    int i = p.row, j = p.col;
+
+    if (moves.empty() || v[i][j]) return false; // restricted on all sides or visited
+    if (i==3 && j==3) return true; // found exit
+
+    v[i][j] = true; // set to visited
+    int res = 0;
+
+    for (auto it : moves) {
+        // collects any 'true' value when exit is found
+        res += IsValid(b, v, it.second);
+    }
+
+    // bool return of int defaults to 0 or 1
+    return res;
+}
+
+bool Maze::ValidBoard() {
+    // init enemy count on board, board, visited array, and return if valid
+    int enemy_count = (rand() % 3) + 2; // 2-4 enemies
+    this->board_ = new Board(enemy_count, 4, 4);
+    std::vector<std::vector<bool> > visited(4, std::vector<bool>(4, false));
+    return IsValid(this->board_, visited, Position{0,0});
+}
+
 // have the given Player take their turn
 void Maze::TakeTurn(Player *p) {
-    std::unordered_map<std::string, Position> pos_map = this->board_->GetMoves(p);
+    std::unordered_map<std::string, Position> pos_map = this->board_->GetMoves(p->get_position());
     std::string input;
     bool has_moved = false;
 
@@ -194,7 +223,7 @@ bool Maze::IsGameOver() {
     int row_max = this->board_->get_rows();
 
     if (human_pos.col==col_max-1 && human_pos.row==row_max-1) return true;
-    if (this->board_->GetMoves(human).empty()) return true;
+    if (this->board_->GetMoves(human->get_position()).empty()) return true;
 
     for (int i=1, n=this->players_.size(); i<n; ++i) {
         Position enemy_pos = this->players_.at(i)->get_position();
@@ -207,7 +236,6 @@ bool Maze::IsGameOver() {
 
 // string info about the game's conditions after it is over
 std::string Maze::GenerateReport() {
-    Player *human = this->players_.front();
     std::string output;
 
     if (this->board_->GetExitOccupant()==SquareType::Human) {
@@ -215,8 +243,10 @@ std::string Maze::GenerateReport() {
     } else {
         output += "$Game Over!$";
     }
-
-    output += "$Total Points: " + std::to_string(human->get_points()) + "$";
+    
+    for (Player *p : this->players_) {
+        output += "$" + p->get_name() + " Total Points: " + std::to_string(p->get_points()) + "$";
+    }
     return output;
 }
 

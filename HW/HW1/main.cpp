@@ -12,8 +12,7 @@ int main() {
 
     // create maze, character, enemy count, and init a new game
     Player p("hooman", true);
-    int enemy_count = (rand() % 3) + 2; // 2-4 enemies
-    Maze m(&p, enemy_count);
+    Maze m(&p);
     m.NewGame();
 
     // print out report of game, delim: '$'

@@ -34,7 +34,7 @@ public:
 
 	// checkout 
 	std::string ToRelativePosition(Position pos);
-	std::unordered_map<std::string, Position> GetMoves(Player *p);
+	std::unordered_map<std::string, Position> GetMoves(Position pos);
 	bool MovePlayer(Player *p, std::unordered_map<std::string, Position> pos_map, std::string next_pos);
 	SquareType GetExitOccupant();
 
@@ -52,12 +52,15 @@ private:
 class Maze {
 public:
 	Maze() {}
-	Maze(Player *human, const int enemy_count);
+	Maze(Player *human);
 	~Maze(); // del board
 
 	// initialize a new game, given one human player and 
 	// a number of enemies to generate
 	void NewGame();
+
+	// return if current board is valid or not
+	bool ValidBoard();
 
 	// have the given Player take their turn
 	void TakeTurn(Player *p);
