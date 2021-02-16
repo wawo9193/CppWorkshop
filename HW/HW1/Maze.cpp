@@ -164,7 +164,7 @@ std::ostream& operator<<(std::ostream& os, const Board &b) {
 
     for (int i=0, m=b.get_rows(); i<m; ++i) {
         for (int j=0, n=b.get_cols(); j<n; ++j) {
-            os << SquareTypeStringify(b.get_square_value(Position{i,j})) << "\t";
+            os << SquareTypeStringify(b.vec_[i][j]) << "\t";
         }
         os << "\n\n";
     }
