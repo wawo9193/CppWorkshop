@@ -2,6 +2,7 @@
 #define COUNTER_HPP
 
 #include <map>
+#include <vector>
 
 template <typename K>
 class Counter {
