@@ -1,0 +1,6 @@
+language: cpp
+
+script:
+  - g++ -std=c++17 -Wall hw/hw2/test.cpp -o test
+  - ./test
+
