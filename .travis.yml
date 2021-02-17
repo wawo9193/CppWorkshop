@@ -1,6 +1,6 @@
 language: cpp
 
 script:
-  - g++ -std=c++17 -Wall hw/hw2/test.cpp -o test
-  - ./test
+  - g++ -std=c++17 -Wall HW/HW2/test.cpp -o hw2test
+  - ./hw2test
 
