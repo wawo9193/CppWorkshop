@@ -2,8 +2,8 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
-#include <cstdlib> // abs
-#include <algorithm> // max
+#include <cstdlib>
+#include <algorithm>
 
 struct Point {
   int x;
