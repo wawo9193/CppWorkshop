@@ -8,7 +8,7 @@ template <typename K>
 class Counter {
     private:
         std::map<K, int> counter_;
-        
+
     public:
         Counter(): counter_() {}
         Counter(std::vector<K> vals) {
@@ -20,7 +20,7 @@ class Counter {
             for (K k : vals) this->counter_.emplace(k, 0);
         }
 
-        std::map<K, int> get_counter() { return this->counter_; }
+        std::map<K, int> get_counter() const { return this->counter_; }
 
         int Count() {
             /*
