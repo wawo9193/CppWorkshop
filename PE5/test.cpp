@@ -8,8 +8,8 @@ TEST_CASE ( "Constructor test", "[constructor]") {
     Rectangle r(Point{1,2}, Point{3,4});
     Point p1 = r.get_p1();
     Point p2 = r.get_p2();
-    REQUIRE( p1.x==1 && p1.y==2 );
-    REQUIRE( p2.x==3 && p2.y==4 );
+    REQUIRE( (p1.x==1 && p1.y==2) );
+    REQUIRE( (p2.x==3 && p2.y==4) );
   }
 
   SECTION( "Check Height/Width"  ) {
