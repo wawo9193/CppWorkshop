@@ -1,9 +1,23 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
+#include <cstdlib> // abs
+#include <algorithm> // max
+
 struct Point {
   int x;
   int y;
+
+  bool operator==(Point& other) {
+    if (x==other.x && y==other.y) return true;
+    return false;
+  }
+
+  Point operator+(int n) {
+    x = std::max (x + n, 0);
+    y = std::max (y + n, 0);
+    return *this;
+  }
 };
 
 
