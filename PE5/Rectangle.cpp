@@ -1,47 +1,77 @@
+// Author: Wayne W
 #include "Rectangle.h"
 
 
-// p1 is the lower left corner
-// p2 is the upper right corner
-// if you find that not following this guidelines breaks this class, that
-// would be considered a bug
+// p1 is bottom left coordinate and p2 is top right coordinate,
+// representing the rectangle.
 Rectangle::Rectangle(Point p1, Point p2): p1_(p1), p2_(p2) {}
 
-// get the width of the rectangle  
-// between p1.x and p2.x
 int Rectangle::GetWidth() {
+    /*
+    * @params: none
+    * 
+    * @return: distance between p1 x and p2 x
+    */
+
     return std::abs (this->p1_.x - this->p2_.x);
 }
 
-// get the height of the rectangle
-// between p2.y and p2.y
 int Rectangle::GetHeight(){
+    /*
+    * @params: none
+    * 
+    * @return: distance between p1 y and p2 y
+    */
+
     return std::abs (this->p1_.y - this->p2_.y);
 }
 
-// returns true iff this rectangle shares any points with the other one
 bool Rectangle::Overlaps(Rectangle& other) {
+    /*
+    * @params:
+    *   other - other rectangle that this is compared to
+    * 
+    * @return: if any of the points equal each other then we define that as an overlap
+    */
+
     return (this->p1_==other.p1_ || 
             this->p2_==other.p2_ ||
             this->p2_==other.p1_ ||
             this->p1_==other.p2_ );
 }
 
-// returns the area of this rectangle
 int Rectangle::CalculateArea() {
+    /*
+    * @params: none
+    * 
+    * @return: length times height
+    */
+
     return abs ((this->p1_.x - this->p2_.x) * (this->p1_.y - this->p2_.y));
 }
 
-// moves the bottom left coordinate down one and to the left one
-// moves the upper right coordinate up one and to the right one
 void Rectangle::Expand() {
+    /*
+    * @params: none
+    * @return: none
+    * 
+    * use struct overloading to move top right coordinate up/forward, 
+    * and bottom left coordinate down/back
+    */
+
     this->p1_ = this->p1_ + -1;
     this->p2_ = this->p2_ + 1;
 }
 
-// moves the bottom left coordinate up one and to the right one
-// moves the upper right coordinate down one and to the left one
 void Rectangle::Shrink() {
+    /*
+    * @params: none
+    * @return: none
+    * 
+    * use struct overloading to move top right coordinate down/back,
+    * and bottom left coordinate up/forward
+    */
+
     this->p1_ = this->p1_ + 1;
     this->p2_ = this->p2_ + -1;
 }

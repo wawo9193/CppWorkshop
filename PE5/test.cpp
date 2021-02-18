@@ -1,9 +1,17 @@
-#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
+#define CATCH_CONFIG_MAIN  // This tells Catch to provide a main()
 #include "catch.hpp"
 
 #include "Rectangle.h"
 
 TEST_CASE ( "Constructor test", "[constructor]") {
+  SECTION( "Arguments map to correct points" ) {
+    Rectangle r(Point{1,2}, Point{3,4});
+    Point p1 = r.get_p1();
+    Point p2 = r.get_p2();
+    REQUIRE( p1.x==1 && p1.y==2 );
+    REQUIRE( p2.x==3 && p2.y==4 );
+  }
+
   SECTION( "Check Height/Width"  ) {
     Rectangle r(Point{0,0}, Point{5,5});
     REQUIRE( r.GetWidth()==5 );
