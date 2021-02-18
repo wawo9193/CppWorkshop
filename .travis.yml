@@ -3,6 +3,6 @@ language: cpp
 script:
   - g++ -std=c++17 HW/HW2/test.cpp -o hw2test
   - ./hw2test
-  - g++ -std=c++17 PE/PE5/test.cpp PE5/Rectangle.cpp -o pe5test
+  - g++ -std=c++17 PE/PE5/test.cpp PE/PE5/Rectangle.cpp -o pe5test
   - ./pe5test
 
