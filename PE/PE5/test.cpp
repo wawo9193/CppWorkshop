@@ -27,9 +27,23 @@ TEST_CASE ( "Constructor test", "[constructor]") {
 }
 
 TEST_CASE ( "Overlap test", "[overlap]") {
-  Rectangle r1(Point{0,0}, Point{2,4});
-  Rectangle r2(Point{0,0}, Point{6,3});
-  REQUIRE( r1.Overlaps(r2) );
+  SECTION ( "One point in another" ) {
+    Rectangle r1(Point{0,0}, Point{1,2});
+    Rectangle r2(Point{1,2}, Point{6,3});
+    REQUIRE( r1.Overlaps(r2) );
+  }
+
+  SECTION ( "Rectangles overlap with equivalent points" ) {
+    Rectangle r1(Point{0,0}, Point{4,2});
+    Rectangle r2(Point{2,1}, Point{6,3});
+    REQUIRE( r1.Overlaps(r2) );
+  }
+
+  SECTION ( "Rectangles that do not overlap" ) {
+    Rectangle r1(Point{0,0}, Point{1,2});
+    Rectangle r2(Point{2,3}, Point{6,3});
+    REQUIRE( !r1.Overlaps(r2) );
+  }
 }
 
 TEST_CASE ( "Area test", "[area]") {
@@ -42,10 +56,12 @@ TEST_CASE ( "Expand test", "[expand]") {
   r.Expand();
   Point p1 = r.get_p1();
   Point p2 = r.get_p2();
-  REQUIRE( p1.x>=0 );
-  REQUIRE( p1.y>=0 );
+  REQUIRE( p1.x==-1 );
+  REQUIRE( p1.y==-1 );
   REQUIRE( p2.x==2 );
   REQUIRE( p2.y==2 );
+  REQUIRE( r.GetWidth()==3 );
+  REQUIRE( r.GetHeight()==3 );
 }
 
 TEST_CASE ( "Shrink test", "[shrink]") {
@@ -53,8 +69,10 @@ TEST_CASE ( "Shrink test", "[shrink]") {
   r.Shrink();
   Point p1 = r.get_p1();
   Point p2 = r.get_p2();
-  REQUIRE( p1.x==1 );
-  REQUIRE( p1.y==1 );
-  REQUIRE( p2.x>=0 );
-  REQUIRE( p2.y>=0 );
+  REQUIRE( p1.x==0 );
+  REQUIRE( p1.y==0 );
+  REQUIRE( p2.x==0 );
+  REQUIRE( p2.y==0 );
+  REQUIRE( r.GetWidth()==0 );
+  REQUIRE( r.GetHeight()==0 );
 }

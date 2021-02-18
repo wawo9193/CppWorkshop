@@ -34,10 +34,13 @@ bool Rectangle::Overlaps(Rectangle& other) {
     * @return: if any of the points equal each other then we define that as an overlap
     */
 
-    return (this->p1_==other.p1_ || 
-            this->p2_==other.p2_ ||
-            this->p2_==other.p1_ ||
-            this->p1_==other.p2_ );
+    bool this_overlaps = ((this->p1_>=other.p1_ && this->p1_<=other.p2_) ||
+                          (this->p2_>=other.p1_ && this->p2_<=other.p2_));
+
+    bool other_overlaps = ((other.p1_>=this->p1_ && other.p1_<=this->p2_) ||
+                           (other.p2_>=this->p1_ && other.p2_<=this->p2_));
+
+    return this_overlaps || other_overlaps;
 }
 
 int Rectangle::CalculateArea() {
@@ -59,8 +62,10 @@ void Rectangle::Expand() {
     * and bottom left coordinate down/back
     */
 
-    this->p1_ = this->p1_ + -1;
-    this->p2_ = this->p2_ + 1;
+    this->p1_.x -= 1;
+    this->p1_.y -= 1;
+    this->p2_.x += 1;
+    this->p2_.y += 1;
 }
 
 void Rectangle::Shrink() {
@@ -72,6 +77,8 @@ void Rectangle::Shrink() {
     * and bottom left coordinate up/forward
     */
 
-    this->p1_ = this->p1_ + 1;
-    this->p2_ = this->p2_ + -1;
+    this->p1_.x = std::min(this->p2_.x, this->p1_.x + 1);
+    this->p1_.y = std::min(this->p2_.y, this->p1_.y + 1);
+    this->p2_.x = std::max (this->p1_.x, this->p2_.x - 1);
+    this->p2_.y = std::max (this->p1_.y, this->p2_.y - 1);
 }
