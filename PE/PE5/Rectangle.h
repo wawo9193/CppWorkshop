@@ -9,28 +9,26 @@ struct Point {
   int x;
   int y;
 
-  bool operator==(Point& other) {
+  bool operator>=(Point& other) {
     /*
     * @params:
     *   other - the Point `this` is compared to
     * 
-    * @return: if the coordinates are the same
+    * @return: if `this` greater than other
     */
 
-    return (x==other.x && y==other.y);
+    return (x>=other.x && y>=other.y);
   }
 
-  Point operator+(int n) {
+  bool operator<=(Point& other) {
     /*
     * @params:
-    *   n - the amount to increment by, can be -/+
+    *   other - the Point `this` is compared to
     * 
-    * @return: the modified Point, `this`
+    * @return: if `this` less than other
     */
 
-    x = std::max (x + n, 0);
-    y = std::max (y + n, 0);
-    return *this;
+   return (x<=other.x && y<=other.y);
   }
 };
 
