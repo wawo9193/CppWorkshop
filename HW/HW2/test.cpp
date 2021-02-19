@@ -104,3 +104,112 @@ TEST_CASE("removal of key from counter", "[remove]") {
 
     REQUIRE(c.get_counter().size()==2);
 }
+
+TEST_CASE("find most and least common keys", "[common]") {
+    SECTION("most common without params") {
+        std::vector<std::string> v = {"a", "b", "c", "d", "e"};
+        Counter <std::string> c(v);
+        c.Increment("a", 2);
+        c.Increment("b", 3);
+        c.Increment("c", 4);
+        c.Increment("d", 5);
+        c.Increment("e", 5);
+        REQUIRE(c.MostCommon()=="d");
+    }
+
+    SECTION("n most common") {
+        std::vector<std::string> v = {"a", "b", "c", "d", "e"};
+        Counter <std::string> c(v);
+        c.Increment("a", 2);
+        c.Increment("b", 3);
+        c.Increment("c", 4);
+        c.Increment("d", 4);
+        c.Increment("e", 5);
+        REQUIRE(c.MostCommon(2)==std::vector<std::string>({"c", "e"}));
+    }
+
+    SECTION("least common without params") {
+        std::vector<std::string> v = {"a", "b", "c", "d", "e"};
+        Counter <std::string> c(v);
+        c.Increment("a", 2);
+        c.Increment("b", 2);
+        c.Increment("c", 4);
+        c.Increment("d", 5);
+        c.Increment("e", 5);
+        REQUIRE(c.LeastCommon()=="a");
+    }
+
+    SECTION("n least common") {
+        std::vector<std::string> v = {"a", "b", "c", "d", "e"};
+        Counter <std::string> c(v);
+        c.Increment("a", 2);
+        c.Increment("b", 3);
+        c.Increment("c", 3);
+        c.Increment("d", 5);
+        c.Increment("e", 5);
+        REQUIRE(c.LeastCommon(2)==std::vector<std::string>({"a","b"}));
+    }
+}
+
+TEST_CASE("normalize the counter", "[normalize]") {
+    std::vector<std::string> v = {"a", "b", "c", "d"};
+    Counter <std::string> c(v);
+    c.Increment("a", 1);
+    c.Increment("b", 1);
+    c.Increment("c", 2);
+    c.Increment("d", 4);
+    REQUIRE(c.Normalized()==std::map<std::string,double>({{"a",0.125},{"b",0.125},{"c",0.25},{"d",0.50}}));
+}
+
+TEST_CASE("retrieve keys or values", "[key value]") {
+    SECTION("retrieve keys") {
+        std::vector<int> v = {1,3,5,7};
+        Counter <int> c(v);
+        REQUIRE((c.Keys()==std::set<int>({1,3,5,7})));
+    }
+
+    SECTION("retrieve values") {
+        std::vector<int> v = {1,3,5,7};
+        Counter <int> c(v);
+        c.Increment(3,5);
+        c.Increment(5,7);
+        c.Increment(7,9);
+        REQUIRE((c.Values()==std::vector<int>({0,5,7,9})));
+    }
+}
+
+TEST_CASE("overloading stream operator") {
+    SECTION("test with string key") {
+        std::vector<std::string> v = {"a", "b", "c", "d", "e"};
+        Counter <std::string> c(v);
+        c.Increment("a", 1);
+        c.Increment("b", 1);
+        c.Increment("c", 2);
+        c.Increment("d", 4);
+
+        bool not_thrown = true;
+        try {
+            std::cout << c << std::endl;
+        } catch(...) {
+            not_thrown = false;
+        }
+        REQUIRE(not_thrown);
+    }
+
+    SECTION("test with double key") {
+        std::vector<double> v = {2.3, 3.4, 1.8, 5.501};
+        Counter <double> c(v);
+        c.Increment(2.3, 1);
+        c.Increment(3.4, 1);
+        c.Increment(1.8, 2);
+        c.Increment(5.501, 4);
+
+        bool not_thrown = true;
+        try {
+            std::cout << c << std::endl;
+        } catch(...) {
+            not_thrown = false;
+        }
+        REQUIRE(not_thrown);
+    }
+}
