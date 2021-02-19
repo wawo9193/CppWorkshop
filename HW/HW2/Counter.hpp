@@ -1,6 +1,7 @@
 #ifndef COUNTER_HPP
 #define COUNTER_HPP
 
+#include <bits/stdc++.h>
 #include <iostream>
 #include <map>
 #include <queue>
