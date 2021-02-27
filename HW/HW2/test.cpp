@@ -30,9 +30,9 @@ TEST_CASE("incrementing and decrementing values at keys", "[update]") {
         c.Increment("b");
         c.Increment("c");
 
-        REQUIRE(c.Count("a")==1);
-        REQUIRE(c.Count("b")==1);
-        REQUIRE(c.Count("c")==1);
+        REQUIRE(c.Count("a")==2);
+        REQUIRE(c.Count("b")==2);
+        REQUIRE(c.Count("c")==2);
     }
 
     SECTION("increment by a specified value at key") {
@@ -42,10 +42,9 @@ TEST_CASE("incrementing and decrementing values at keys", "[update]") {
         c.Increment("b", 4);
         c.Increment("c", 6);
 
-        REQUIRE(c.Count("a")==2);
-        REQUIRE(c.Count("b")==4);
-        REQUIRE(c.Count("c")==6);
-        std::cout << c << "!!!" << std::endl;
+        REQUIRE(c.Count("a")==3);
+        REQUIRE(c.Count("b")==5);
+        REQUIRE(c.Count("c")==7);
     }
 
     SECTION("decrement value at key") {
@@ -69,7 +68,7 @@ TEST_CASE("Sum values in counter", "[sum]") {
         c.Increment("b");
         c.Increment("c");
 
-        REQUIRE(c.Count()==3);
+        REQUIRE(c.Count()==6);
     }
 
     SECTION("value at key") {
@@ -79,9 +78,9 @@ TEST_CASE("Sum values in counter", "[sum]") {
         c.Increment("b");
         c.Increment("c");
 
-        REQUIRE(c.Count("a")==1);
-        REQUIRE(c.Count("b")==1);
-        REQUIRE(c.Count("c")==1);
+        REQUIRE(c.Count("a")==2);
+        REQUIRE(c.Count("b")==2);
+        REQUIRE(c.Count("c")==2);
     }
 
     SECTION("sum within range") {
@@ -91,7 +90,7 @@ TEST_CASE("Sum values in counter", "[sum]") {
         c.Increment("b");
         c.Increment("c");
 
-        REQUIRE(c.Count("a", "c")==2);
+        REQUIRE(c.Count("a", "c")==4);
     }
 }
 
@@ -154,10 +153,8 @@ TEST_CASE("find most and least common keys", "[common]") {
 TEST_CASE("normalize the counter", "[normalize]") {
     std::vector<std::string> v = {"a", "b", "c", "d"};
     Counter <std::string> c(v);
-    c.Increment("a", 1);
-    c.Increment("b", 1);
-    c.Increment("c", 2);
-    c.Increment("d", 4);
+    c.Increment("c", 1);
+    c.Increment("d", 3);
     REQUIRE(c.Normalized()==std::map<std::string,double>({{"a",0.125},{"b",0.125},{"c",0.25},{"d",0.50}}));
 }
 
@@ -174,7 +171,7 @@ TEST_CASE("retrieve keys or values", "[key value]") {
         c.Increment(3,5);
         c.Increment(5,7);
         c.Increment(7,9);
-        REQUIRE((c.Values()==std::vector<int>({0,5,7,9})));
+        REQUIRE((c.Values()==std::vector<int>({1,6,8,10})));
     }
 }
 
