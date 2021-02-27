@@ -45,6 +45,7 @@ TEST_CASE("incrementing and decrementing values at keys", "[update]") {
         REQUIRE(c.Count("a")==2);
         REQUIRE(c.Count("b")==4);
         REQUIRE(c.Count("c")==6);
+        std::cout << c << "!!!" << std::endl;
     }
 
     SECTION("decrement value at key") {
@@ -54,9 +55,9 @@ TEST_CASE("incrementing and decrementing values at keys", "[update]") {
         c.Decrement("b");
         c.Decrement("c");
 
-        REQUIRE(c.Count("a")==-1);
-        REQUIRE(c.Count("b")==-1);
-        REQUIRE(c.Count("c")==-1);
+        REQUIRE(c.Count("a")==0);
+        REQUIRE(c.Count("b")==0);
+        REQUIRE(c.Count("c")==0);
     }
 }
 
@@ -118,14 +119,13 @@ TEST_CASE("find most and least common keys", "[common]") {
     }
 
     SECTION("n most common") {
-        std::vector<std::string> v = {"a", "b", "c", "d", "e"};
+        std::vector<std::string> v = {"a", "b", "c", "d"};
         Counter <std::string> c(v);
-        c.Increment("a", 2);
+        c.Increment("a", 6);
         c.Increment("b", 3);
         c.Increment("c", 4);
-        c.Increment("d", 4);
-        c.Increment("e", 5);
-        REQUIRE(c.MostCommon(2)==std::vector<std::string>({"c", "e"}));
+        c.Increment("d", 3);
+        REQUIRE(c.MostCommon(3)==std::vector<std::string>({"a", "c", "b"}));
     }
 
     SECTION("least common without params") {
@@ -178,7 +178,7 @@ TEST_CASE("retrieve keys or values", "[key value]") {
     }
 }
 
-TEST_CASE("overloading stream operator") {
+TEST_CASE("overloading stream operator", "[overload]") {
     SECTION("test with string key") {
         std::vector<std::string> v = {"a", "b", "c", "d", "e"};
         Counter <std::string> c(v);
@@ -209,7 +209,31 @@ TEST_CASE("overloading stream operator") {
             std::cout << c << std::endl;
         } catch(...) {
             not_thrown = false;
-        }
+        } 
         REQUIRE(not_thrown);
     }
+}
+
+TEST_CASE( "programmer defined key", "[custom]" ) {
+    std::vector<CustomVar> v = {
+                                    CustomVar{"hi", 5, true}, 
+                                    CustomVar{"alrighty", 6, false}, 
+                                    CustomVar{"ticonderoga", 1111, true},
+                                };
+
+    bool not_thrown = true;
+    try {
+
+        Counter <CustomVar> c(v);
+
+        c.Increment(CustomVar{"hi", 5, true}, 1);
+        c.Increment(CustomVar{"alrighty", 6, false}, 1);
+        c.Increment(CustomVar{"ticonderoga", 1111, true}, 2);
+
+        std::cout << c << std::endl;
+
+    } catch(...) {
+        not_thrown = false;
+    }
+    REQUIRE(not_thrown);
 }
